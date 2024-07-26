@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import Provider from "@/components/Provider";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
@@ -18,15 +19,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="light">
-      <body
-        className={cn(
-          `min-h-screen font-sans antialiased grainy`,
-          inter.className
-        )}
-      >
-        <Navbar />
-        {children}
-      </body>
+      <Provider>
+        <body
+          className={cn(
+            `min-h-screen font-sans antialiased grainy`,
+            inter.className
+          )}
+        >
+          <Navbar />
+          {children}
+        </body>
+      </Provider>
     </html>
   );
 }
