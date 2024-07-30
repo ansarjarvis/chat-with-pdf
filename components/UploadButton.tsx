@@ -4,7 +4,7 @@ import { FC, useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import { Button } from "./ui/Button";
 import Dropzone from "react-dropzone";
-import { Cloud, File } from "lucide-react";
+import { Cloud, File, Loader2 } from "lucide-react";
 import { Progress } from "./ui/progress";
 import { useUploadThing } from "@/lib/uploadthing";
 import { useToast } from "./ui/use-toast";
@@ -12,7 +12,7 @@ import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 
 let UploadDropzone = () => {
-  let [isUploading, setIsUploading] = useState<boolean>(true);
+  let [isUploading, setIsUploading] = useState<boolean>(false);
   let [uplaodProgress, setIsUploadProgess] = useState<number>(0);
   let { startUpload } = useUploadThing("pdfUploader");
   let { toast } = useToast();
@@ -50,7 +50,7 @@ let UploadDropzone = () => {
     <Dropzone
       multiple={false}
       onDrop={async (acceptedFile) => {
-        console.log(acceptedFile);
+        setIsUploading(true);
         let progressInterval = startSimulatedProgress();
 
         /* handle file uploading */
@@ -116,9 +116,19 @@ let UploadDropzone = () => {
               {isUploading ? (
                 <div className="w-full mt-4 max-w-sm mx-auto">
                   <Progress
+                    indicatorColor={
+                      uplaodProgress === 100 ? "bg-green-500" : ""
+                    }
                     value={uplaodProgress}
                     className="h-1 w-full bg-zinc-200"
                   />
+
+                  {uplaodProgress === 100 ? (
+                    <div className="flex gap-1 items-center justify-center text-sm text-zinc-700 text-center pt-2">
+                      <Loader2 className="h-3 w-3 animate-spin" />
+                      Redirecting...
+                    </div>
+                  ) : null}
                 </div>
               ) : null}
               <input {...getInputProps()} />

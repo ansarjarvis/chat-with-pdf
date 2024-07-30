@@ -1,8 +1,9 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { publicProcedure, router } from "./trpc";
+import { privateProcedure, publicProcedure, router } from "./trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/db";
-import { use } from "react";
+import { z } from "zod";
+
 export const appRouter = router({
   authCallback: publicProcedure.query(async () => {
     let { getUser } = getKindeServerSession();
@@ -35,6 +36,53 @@ export const appRouter = router({
       success: true,
     };
   }),
+  getUserFiles: privateProcedure.query(({ ctx }) => {
+    let { user, userId } = ctx;
+
+    return db.file.findMany({
+      where: {
+        userId: userId,
+      },
+    });
+  }),
+  deleteFile: privateProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      let { userId } = ctx;
+
+      let file = await db.file.findFirst({
+        where: {
+          id: input.id,
+          userId,
+        },
+      });
+
+      if (!file) throw new TRPCError({ code: "NOT_FOUND" });
+
+      await db.file.delete({
+        where: {
+          id: input.id,
+        },
+      });
+      return file;
+    }),
+
+  getFile: privateProcedure
+    .input(z.object({ key: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      let { userId } = ctx;
+
+      let file = await db.file.findFirst({
+        where: {
+          key: input.key,
+          userId,
+        },
+      });
+
+      if (!file) throw new TRPCError({ code: "NOT_FOUND" });
+
+      return file;
+    }),
 });
 
 export type AppRouter = typeof appRouter;
