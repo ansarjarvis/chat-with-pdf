@@ -3,6 +3,7 @@ import { privateProcedure, publicProcedure, router } from "./trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/db";
 import { z } from "zod";
+import { INFITE_QUERY_LIMIT } from "@/config/infinite-query";
 
 export const appRouter = router({
   authCallback: publicProcedure.query(async () => {
@@ -82,6 +83,75 @@ export const appRouter = router({
       if (!file) throw new TRPCError({ code: "NOT_FOUND" });
 
       return file;
+    }),
+
+  getFileUploadStatus: privateProcedure
+    .input(z.object({ fileId: z.string() }))
+    .query(async ({ input, ctx }) => {
+      let file = await db.file.findFirst({
+        where: {
+          id: input.fileId,
+          userId: ctx.userId,
+        },
+      });
+
+      if (!file) return { status: "PENDING" as const };
+
+      return { status: file.uplaodStatus };
+    }),
+
+  getFileMessages: privateProcedure
+    .input(
+      z.object({
+        limit: z.number().min(1).max(100).nullish(),
+        cursor: z.string().nullish(),
+        fileId: z.string(),
+      })
+    )
+    .query(async ({ input, ctx }) => {
+      let { userId } = ctx;
+      let { fileId, cursor } = input;
+      let limit = input.limit ?? INFITE_QUERY_LIMIT;
+
+      let file = await db.file.findFirst({
+        where: {
+          id: fileId,
+          userId,
+        },
+      });
+
+      if (!file) throw new TRPCError({ code: "NOT_FOUND" });
+
+      let messages = await db.message.findMany({
+        where: {
+          fileId,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+        cursor: cursor ? { id: cursor } : undefined,
+
+        take: limit + 1,
+
+        select: {
+          id: true,
+          text: true,
+          createdAt: true,
+          isUserMessage: true,
+        },
+      });
+
+      let nextCursor: typeof cursor | undefined = undefined;
+
+      if (messages.length > limit) {
+        let nextItem = messages.pop();
+        nextCursor = nextItem?.id;
+      }
+
+      return {
+        messages,
+        nextCursor,
+      };
     }),
 });
 
