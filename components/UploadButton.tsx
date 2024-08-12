@@ -11,10 +11,12 @@ import { useToast } from "./ui/use-toast";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 
-let UploadDropzone = () => {
+let UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
   let [isUploading, setIsUploading] = useState<boolean>(false);
   let [uplaodProgress, setIsUploadProgess] = useState<number>(0);
-  let { startUpload } = useUploadThing("pdfUploader");
+  let { startUpload } = useUploadThing(
+    isSubscribed ? "ProPDFUploader" : "freePDFUploader"
+  );
   let { toast } = useToast();
   let router = useRouter();
 
@@ -99,7 +101,9 @@ let UploadDropzone = () => {
                   <span className="font-semibold">Click to upload</span> or drag
                   and drop
                 </p>
-                <p className="text-sm text-zinc-500">PDF (up to 4MB)</p>
+                <p className="text-sm text-zinc-500">
+                  PDF (up to {isSubscribed ? "16" : "4"} MB)
+                </p>
               </div>
 
               {acceptedFiles && acceptedFiles[0] ? (
@@ -115,13 +119,13 @@ let UploadDropzone = () => {
 
               {isUploading ? (
                 <div className="w-full mt-4 max-w-sm mx-auto">
-                  <Progress
+                  {/* <Progress
                     indicatorColor={
                       uplaodProgress === 100 ? "bg-green-500" : ""
                     }
                     value={uplaodProgress}
                     className="h-1 w-full bg-zinc-200"
-                  />
+                  /> */}
 
                   {uplaodProgress === 100 ? (
                     <div className="flex gap-1 items-center justify-center text-sm text-zinc-700 text-center pt-2">
@@ -131,6 +135,7 @@ let UploadDropzone = () => {
                   ) : null}
                 </div>
               ) : null}
+
               <input {...getInputProps()} />
             </label>
           </div>
@@ -140,9 +145,11 @@ let UploadDropzone = () => {
   );
 };
 
-interface UploadButtonProps {}
+interface UploadButtonProps {
+  isSubscribed: boolean;
+}
 
-let UploadButton: FC<UploadButtonProps> = ({}) => {
+let UploadButton: FC<UploadButtonProps> = ({ isSubscribed }) => {
   let [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <Dialog
@@ -157,7 +164,7 @@ let UploadButton: FC<UploadButtonProps> = ({}) => {
         <Button>Upload PDF</Button>
       </DialogTrigger>
       <DialogContent>
-        <UploadDropzone />
+        <UploadDropzone isSubscribed={isSubscribed} />
       </DialogContent>
     </Dialog>
   );

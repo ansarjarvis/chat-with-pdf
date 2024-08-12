@@ -8,13 +8,18 @@ import Skeleton from "react-loading-skeleton";
 import Link from "next/link";
 import { format } from "date-fns";
 import { Button } from "./ui/Button";
-interface DashboardProps {}
+import { getUserSubscriptionPlan } from "@/lib/stripe";
 
-let Dashboard: FC<DashboardProps> = ({}) => {
+interface DashboardProps {
+  subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>;
+}
+
+let Dashboard: FC<DashboardProps> = ({ subscriptionPlan }) => {
   let [currentDeletingFile, setCurrentDeletingFile] = useState<string | null>(
     null
   );
   let utis = trpc.useUtils();
+
   let { data: files, isLoading } = trpc.getUserFiles.useQuery();
   let { mutate: deleteFile } = trpc.deleteFile.useMutation({
     onSuccess: () => {
@@ -32,10 +37,9 @@ let Dashboard: FC<DashboardProps> = ({}) => {
     <main className="mx-auto max-w-7xl md:p-10">
       <div className="mt-8 flex flex-col items-center justify-between gap-4 border-b border-gray-200 pb-5 sm:flex-row sm:gap-0">
         <h1 className="mb-3 font-bold text-5xl text-gray-900">My Files</h1>
-        <UploadButton />
+        <UploadButton isSubscribed={subscriptionPlan.isSubscribed} />
       </div>
 
-      {/* Display all user file  */}
       {files && files?.length !== 0 ? (
         <ul className="mt-8 grid grid-cols-1 gap-6 divide-y divide-zinc-200 md:grid-cols-2 lg:grid-cols-3">
           {files
