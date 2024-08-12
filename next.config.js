@@ -5,6 +5,18 @@ const nextConfig = {
     config.resolve.alias.encoding = false;
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+      {
+        protocol: "http",
+        hostname: "**",
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;
