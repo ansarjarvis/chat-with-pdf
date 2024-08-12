@@ -5,7 +5,6 @@ import { buttonVariants } from "./ui/Button";
 import {
   RegisterLink,
   LoginLink,
-  LogoutLink,
   getKindeServerSession,
 } from "@kinde-oss/kinde-auth-nextjs/server";
 import { ArrowRight } from "lucide-react";
