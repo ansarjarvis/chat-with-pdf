@@ -36,7 +36,7 @@ export let POST = async (req: NextRequest, res: NextResponse) => {
     data: {
       text: message,
       isUserMessage: true,
-      userId: user.id,
+      userId: user?.id,
       fileId,
     },
   });
@@ -110,7 +110,7 @@ export let POST = async (req: NextRequest, res: NextResponse) => {
           text: completion,
           isUserMessage: false,
           fileId,
-          userId: user.id,
+          userId: user?.id,
         },
       });
     },
