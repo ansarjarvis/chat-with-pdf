@@ -45,7 +45,7 @@ export function constructMetadata({
       creator: "@ansarjarvis",
     },
     icons,
-    metadataBase: new URL("http://localhost:3000"),
+    metadataBase: new URL("https://chat-with-pdf-lemon.vercel.app"),
     themeColor: "#FFF",
     ...(noIndex && {
       robots: {
