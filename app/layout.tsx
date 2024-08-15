@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { cn, constructMetadata } from "@/lib/utils";
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 import "react-loading-skeleton/dist/skeleton.css";
@@ -28,6 +29,7 @@ export default function RootLayout({
           <Toaster />
           <Navbar />
           {children}
+          <Analytics />
         </body>
       </Provider>
     </html>
