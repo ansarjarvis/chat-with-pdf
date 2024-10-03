@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Chat with PDF
+
+[Live Demo](https://chat-with-pdf-lemon.vercel.app/)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Usage Instructions](#usage-instructions)
+- [Technologies Used](#technologies-used)
+- [Security and Privacy](#security-and-privacy)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+
+## Overview
+
+**Chat with PDF Lemon** is a SaaS application that enables users to interact with PDF documents using natural language queries. Instead of manually searching through lengthy PDFs, users can ask questions and receive instant, relevant answers, streamlining the process of extracting information from documents.
+
+## Features
+
+- **PDF Upload**: Securely upload your PDF documents to the platform.
+- **Natural Language Processing**: Use conversational language to query your documents.
+- **Instant Answers**: Get quick responses based on the content within your PDFs.
+- **User-Friendly Interface**: Enjoy a clean and intuitive UI for seamless interaction.
+- **Multi-Document Support**: Manage and interact with multiple PDFs simultaneously.
+- **Data Privacy**: Your documents are securely stored and are not shared with third parties.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- A modern web browser (e.g., Chrome, Firefox, Edge, Safari).
+- An active internet connection.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Usage Instructions
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Access the Application**
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+   - Navigate to [https://chat-with-pdf-lemon.vercel.app/](https://chat-with-pdf-lemon.vercel.app/).
 
-## Learn More
+2. **Sign Up / Log In**
 
-To learn more about Next.js, take a look at the following resources:
+   - If you're a new user, click on the **Sign Up** button to create an account.
+   - If you already have an account, click on **Log In** and enter your credentials.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Upload a PDF Document**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   - Click on the **Upload PDF** button on your dashboard.
+   - Select the PDF file from your device.
+   - Wait for the document to be processed (processing time may vary depending on file size).
 
-## Deploy on Vercel
+4. **Interact with the PDF**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   - Once the PDF is processed, you can start asking questions in the chat interface.
+   - Type your question in the input field and press **Enter** or click the **Send** button.
+   - The application will display answers based on the content of your PDF.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+5. **Manage Your Documents**
+
+   - View all your uploaded PDFs in the **My Documents** section.
+   - Delete or rename documents as needed.
+
+## Technologies Used
+
+- **Frontend**: React.js, Next.js
+- **Backend**: Node.js, Express.js
+- **AI Processing**: Integration with OpenAI GPT-4 along with LangChain
+- **Styling**: Tailwind CSS
+- **Deployment**: Vercel
+- **File Storage**: Secure cloud storage solutions
+
+## Security and Privacy
+
+- **Data Encryption**: All data is encrypted during transit (HTTPS) and at rest.
+- **Authentication**: Secure user authentication with password hashing.
+- **Data Ownership**: Users retain ownership of their uploaded documents.
+- **Privacy Policy**: We are committed to protecting your privacy. [Read our Privacy Policy](#).
+
+## Roadmap
+
+- **Support for Additional File Formats**: Plan to include support for Word documents, Excel spreadsheets, etc.
+- **Mobile Application**: Develop mobile apps for iOS and Android platforms.
+- **Enhanced AI Features**: Implement more advanced AI capabilities for better context understanding.
+- **Collaborative Features**: Allow users to share documents and chat sessions with others.
+
+## Contributing
+
+This project is not open to contributions at the moment. However, we appreciate your interest and encourage you to fork the repository and build upon the existing codebase.
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## Contact
+
+- **Email**:
+
+  - General Inquiries: [ansar.ofcl00@gmail.com](mailto:ansar.ofcl00@gmail.com)
+
+- **Website**: [https://chat-with-pdf-lemon.vercel.app/](https://chat-with-pdf-lemon.vercel.app/)
+- **LinkedIn**: [Company Profile](https://www.linkedin.com/in/ansarjarvis/)
